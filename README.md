@@ -1,3 +1,13 @@
+---
+title: Finance AI Agent
+emoji: 💰
+colorFrom: green
+colorTo: blue
+sdk: gradio
+app_file: app.py
+license: apache-2.0
+---
+
 # 💰 Finance AI Agent
 
 <div align="center">
