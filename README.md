@@ -19,123 +19,36 @@
 
 Finance AI Agent is an intelligent financial companion that leverages the power of **Llama 3.1** (via Groq's high-performance API) to provide seamless expense tracking, financial analysis, and automated reporting. Built with a robust SQLite database for persistent storage and a beautiful Gradio interface, this application transforms how you interact with your personal finances.
 
-### 🎯 Key Capabilities
-
-- **AI-Driven Financial Insights**: Natural language processing for intelligent expense categorization and financial analysis
-- **Dynamic PDF Watermarking**: Professional PDF reports with security watermarks for document protection
-- **Secure Data Storage**: SQLite database with persistent, multi-user support
-- **Natural Language Processing**: Interact with your finances using everyday conversation
-- **Intelligent Intent Classification**: Automatically understands your financial actions
-- **Automated PDF Reports**: Generate professional financial summaries with a single click
-- **Secure Email Delivery**: Receive detailed reports directly in your inbox
-- **Real-time Balance Tracking**: Always know your financial standing
-
 ---
 
 ## ✨ Key Features
 
-### 💬 **Natural Language Expense Tracking**
-- Log expenses by simply typing: *"I spent Rs 500 on groceries today"*
-- Set salary with: *"My monthly salary is Rs 50,000"*
-- Add income with: *"I earned Rs 10,000 from freelance work"*
-- The AI automatically categorizes and records everything
-
-### 📊 **Monthly Financial Snapshots**
-- Real-time balance calculations
-- Spending breakdown by category with percentages
-- Income vs. expense analysis
-- Visual representation of your financial health
-
-### 📄 **Automated Professional PDF Reports**
-- Beautifully formatted financial statements using **fpdf**
-- Custom-styled headers with your name and date
-- Detailed spending summaries with category breakdowns
-- Recent transaction history
-- Professional layout suitable for record-keeping
-
-### 📧 **Secure Email Delivery**
-- SMTP-based email sending with TLS encryption
-- Attach professional PDF reports directly to emails
-- Configurable email service (Gmail, Outlook, etc.)
-- Environment variable-based credential management
-
-### 👥 **Multi-User Support**
-- Each user has isolated financial data
-- Switch between users seamlessly
-- Personalized reports for each individual
-- Independent financial tracking
+- **🧠 AI-Driven Financial Insights** – Natural language processing for intelligent expense categorization and financial analysis
+- **🗣️ Natural Language Interface** – Log expenses, set salary, and track income using everyday conversation
+- **📊 Real-Time Balance Tracking** – Instant financial snapshots with income vs. expense analysis
+- **📄 Automated PDF Reports** – Professional financial statements with dynamic watermarking for document security
+- **📧 Secure Email Delivery** – Receive detailed PDF reports directly in your inbox with TLS encryption
+- **👥 Multi-User Support** – Isolated financial data for multiple users with personalized reports
+- **🔒 Secure Data Storage** – SQLite database with persistent, encrypted data management
+- **⚡ Intelligent Intent Classification** – Automatically understands and executes financial actions
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| **AI Model** | Llama 3.1 (8B Instant) | Natural language understanding & intent classification |
-| **AI Provider** | Groq API | High-performance, low-latency inference |
-| **Web Interface** | Gradio | Modern, responsive chat interface |
-| **Database** | SQLite3 | Persistent storage for financial data |
-| **PDF Generation** | fpdf | Professional report creation with watermarking |
-| **Email** | smtplib (SMTP) | Secure email delivery |
-| **Language** | Python 3.9+ | Core application logic |
+| Component | Technology |
+|-----------|-----------|
+| **AI Model** | Llama 3.1 (8B Instant) |
+| **AI Provider** | Groq API |
+| **Web Interface** | Gradio |
+| **Database** | SQLite3 |
+| **PDF Generation** | fpdf |
+| **Email** | smtplib (SMTP) |
+| **Language** | Python 3.9+ |
 
 ---
 
-## 📖 User Guide
-
-### Getting Started
-
-1. **Introduce Yourself**
-   ```
-   "Hi, I'm John"
-   ```
-   The AI will remember your name for all future interactions.
-
-2. **Set Your Monthly Salary**
-   ```
-   "My monthly salary is Rs 75,000"
-   ```
-   This establishes your baseline income for the month.
-
-3. **Log Expenses**
-   ```
-   "I spent Rs 2,500 on groceries"
-   "Bought a new laptop for Rs 45,000"
-   "Paid electricity bill: Rs 3,500"
-   ```
-   The AI automatically categorizes and tracks each expense.
-
-4. **Add Additional Income**
-   ```
-   "I earned Rs 15,000 from freelance work"
-   "Got a bonus of Rs 10,000"
-   ```
-   Track income beyond your base salary.
-
-5. **Check Your Balance**
-   ```
-   "How much money do I have left?"
-   "What's my current balance?"
-   "Show me my financial snapshot"
-   ```
-   Get real-time updates on your financial status.
-
-6. **View Spending Breakdown**
-   ```
-   "Show me my spending breakdown"
-   "Where did I spend my money?"
-   "Category-wise expense summary"
-   ```
-   See detailed analysis by spending category.
-
-7. **Request Email Reports**
-   ```
-   "Send the report to my email"
-   "Email me the financial summary"
-   ```
-   Receive a professional PDF report directly in your inbox.
-
-### Example Conversation
+## 📖 Usage Example
 
 ```
 User: "Hi, I'm Sarah"
@@ -159,133 +72,12 @@ AI: "Success: Report sent to sarah@email.com!"
 
 ---
 
-## ⚙️ Setup Instructions
+## 🔒 Data Privacy
 
-### For Hugging Face Spaces Deployment
-
-#### Prerequisites
-- A Hugging Face account with Space creation permissions
-- Groq API key from [console.groq.com](https://console.groq.com/)
-- Email account with app password (for Gmail, enable 2FA and generate app password)
-
-#### Step 1: Create a New Space
-1. Go to [huggingface.co/spaces](https://huggingface.co/spaces)
-2. Click **"Create new Space"**
-3. Choose **Gradio** as the SDK
-4. Select **Free** or **Pro** hardware based on your needs
-5. Name your space (e.g., `personal-finance-ai`)
-
-#### Step 2: Upload Files
-Upload the following files to your Space:
-```
-├── app.py                 # Main application
-├── requirements.txt       # Python dependencies
-└── README.md             # This file
-```
-
-#### Step 3: Configure Secrets
-Navigate to your Space's **Settings** → **Secrets** and add the following:
-
-| Secret Name | Description | Example |
-|-------------|-------------|---------|
-| `GROQ_API_KEY` | Your Groq API key | `gsk_...` |
-| `EMAIL_USER` | Your email address | `your.email@gmail.com` |
-| `EMAIL_PASS` | Your email app password | `abcd-efgh-ijkl-mnop` |
-
-**Important:**
-- Get your Groq API key from [console.groq.com](https://console.groq.com/)
-- For Gmail, generate an app password at [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)
-- Never commit secrets to your repository
-
-#### Step 4: Deploy
-The Space will automatically build and launch. Once ready, access your AI agent at the provided URL.
-
----
-
-### For Local Development
-
-#### Prerequisites
-- Python 3.9 or higher
-- pip package manager
-
-#### Installation
-
-1. **Clone the Repository**
-   ```bash
-   git clone <your-repository-url>
-   cd Assignment-01
-   ```
-
-2. **Create Virtual Environment**
-   ```bash
-   python -m venv venv
-   
-   # Windows
-   venv\Scripts\activate
-   
-   # macOS/Linux
-   source venv/bin/activate
-   ```
-
-3. **Install Dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Configure Environment Variables**
-   Create a `.env` file in the project root:
-   ```env
-   GROQ_API_KEY=your_groq_api_key_here
-   EMAIL_USER=your_email@gmail.com
-   EMAIL_PASS=your_email_app_password
-   ```
-
-5. **Run the Application**
-   ```bash
-   python app.py
-   ```
-
-6. **Access the Interface**
-   Open your browser and navigate to `http://localhost:7860`
-
----
-
-## 📦 Dependencies
-
-Install all required packages using:
-
-```bash
-pip install -r requirements.txt
-```
-
-**Key Dependencies:**
-- `gradio` - Web interface framework
-- `groq` - Groq API client
-- `python-dotenv` - Environment variable management
-- `fpdf` - PDF generation
-- `sqlite3` - Database (built-in Python)
-
----
-
-## 🔒 Security Best Practices
-
-- **Never commit secrets** to version control
-- **Use app passwords** for email authentication, not your main password
-- **Rotate API keys** periodically
-- **Enable 2FA** on all associated accounts
-- **Review permissions** regularly
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+- All financial data is stored locally in SQLite database
+- Email credentials are managed via environment variables (never committed to version control)
+- PDF reports include dynamic watermarking for document security
+- Multi-user data isolation ensures privacy between users
 
 ---
 
