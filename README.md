@@ -97,7 +97,7 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 
 <div align="center">
 
-**Built with ❤️ by Kaviondu Chamod**
+**Built with ❤️ by Kavindu Chamod**
 
 [⭐ Star this repo](https://github.com/Dev-Kavindu/finance-ai-agent) | [🐛 Report Issues](https://github.com/Dev-Kavindu/finance-ai-agent/issues) | [💡 Feature Requests](https://github.com/Dev-Kavindu/finance-ai-agent/issues)
 
