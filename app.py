@@ -649,6 +649,7 @@ def send_email_report(recipient_email, report_type="full", owner_name=None):
     msg_body.attach(MIMEText(html_content, 'html'))
     msg.attach(msg_body)
     
+
     # 6. Attach & Send
     try:
         # Validate PDF file exists before attaching
@@ -659,9 +660,10 @@ def send_email_report(recipient_email, report_type="full", owner_name=None):
             part = MIMEApplication(f.read(), _subtype="pdf")
             part.add_header('Content-Disposition', 'attachment', filename=os.path.basename(pdf_path))
             msg.attach(part)
-            
-        with smtplib.SMTP('smtp.gmail.com', 587) as server:
-            server.starttls()
+        
+        # 587 වෙනුවට 465 සහ SMTP_SSL පාවිච්චි කරන්න
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=30) as server:
+            # server.starttls() අවශ්‍ය නැත (SSL නිසා)
             server.login(sender_email, sender_password)
             server.send_message(msg)
         
