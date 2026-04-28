@@ -640,9 +640,9 @@ def send_email_report(recipient_email, report_type="full", owner_name=None):
         if not os.path.exists(pdf_path):
             return f"Error: PDF file not found at {pdf_path}"
         
-        # Read PDF file as binary
+        # Read PDF file as binary and convert to list for Resend
         with open(pdf_path, "rb") as f:
-            pdf_content = f.read()
+            pdf_content = list(f.read())
         
         # Send email using Resend
         params = {
