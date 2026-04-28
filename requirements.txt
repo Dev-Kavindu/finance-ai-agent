@@ -2,3 +2,4 @@ gradio
 groq
 python-dotenv
 fpdf
+resend

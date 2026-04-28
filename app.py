@@ -1,15 +1,12 @@
 import os
 import json
 import re
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from email.mime.application import MIMEApplication
 from dotenv import load_dotenv
 from groq import Groq
 import gradio as gr
 import sqlite3
 from datetime import datetime
+import resend
 
 # Try to import fpdf for PDF generation
 try:
@@ -20,6 +17,9 @@ except ImportError:
     print("Warning: fpdf library not installed. PDF reports will not be available.")
 
 load_dotenv(override=True)
+
+# Initialize Resend API
+resend.api_key = os.getenv("RESEND_API_KEY")
 
 # Hugging Face Spaces persistent storage
 DATA_DIR = os.getenv('HF_HOME', '/data')
@@ -593,20 +593,9 @@ def send_email_report(recipient_email, report_type="full", owner_name=None):
     html_history = format_html(history)
 
     # 5. Email Setup
-    sender_email = os.getenv('EMAIL_USER')
-    sender_password = os.getenv('EMAIL_PASS')
-    
-    # Validate email credentials
-    if not sender_email or not sender_password:
-        return "Error: EMAIL_USER and EMAIL_PASS environment variables must be set."
-    
-    msg = MIMEMultipart('mixed')
-    msg['From'] = sender_email
-    msg['To'] = recipient_email
-    msg['Subject'] = f"Financial Report - {owner.title()}"
-    
-    msg_body = MIMEMultipart('alternative')
-    
+    # Validate Resend API key
+    if not resend.api_key:
+        return "Error: RESEND_API_KEY environment variable must be set."
     
     html_content = f"""
     <html>
@@ -644,11 +633,6 @@ def send_email_report(recipient_email, report_type="full", owner_name=None):
     </body>
     </html>
     """
-    
-    msg_body.attach(MIMEText(balance, 'plain'))
-    msg_body.attach(MIMEText(html_content, 'html'))
-    msg.attach(msg_body)
-    
 
     # 6. Attach & Send
     try:
@@ -656,16 +640,25 @@ def send_email_report(recipient_email, report_type="full", owner_name=None):
         if not os.path.exists(pdf_path):
             return f"Error: PDF file not found at {pdf_path}"
         
+        # Read PDF file as binary
         with open(pdf_path, "rb") as f:
-            part = MIMEApplication(f.read(), _subtype="pdf")
-            part.add_header('Content-Disposition', 'attachment', filename=os.path.basename(pdf_path))
-            msg.attach(part)
+            pdf_content = f.read()
         
-        # 587 වෙනුවට 465 සහ SMTP_SSL පාවිච්චි කරන්න
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=30) as server:
-            # server.starttls() අවශ්‍ය නැත (SSL නිසා)
-            server.login(sender_email, sender_password)
-            server.send_message(msg)
+        # Send email using Resend
+        params = {
+            "from": "onboarding@resend.dev",
+            "to": [recipient_email],
+            "subject": f"Financial Report - {owner.title()}",
+            "html": html_content,
+            "attachments": [
+                {
+                    "filename": os.path.basename(pdf_path),
+                    "content": pdf_content
+                }
+            ]
+        }
+        
+        resend.Emails.send(params)
         
         # Clean up temporary PDF file
         if os.path.exists(pdf_path):
