@@ -470,6 +470,7 @@ def reset_monthly_financial_state(owner_name=None):
     cursor.execute('DELETE FROM salary WHERE owner_name = ?', (owner,))
     cursor.execute('DELETE FROM expenses WHERE owner_name = ?', (owner,))
     cursor.execute('DELETE FROM income_logs WHERE owner_name = ?', (owner,))
+    cursor.execute('DELETE FROM chat_history WHERE owner_name = ?', (owner,))
     conn.commit()
     conn.close()
     return f"Okay {owner.title()}, I reset your financial records. Current balance is Rs 0.00 (LKR)."
