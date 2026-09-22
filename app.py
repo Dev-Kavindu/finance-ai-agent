@@ -866,21 +866,32 @@ def run_conversation(user_prompt):
     ]
 
     try:
-        # AI call with JSON mode
+        # response_format අයින් කරලා තියෙන්නේ 400 error එක එන එක නවත්තන්න
         response = groq.chat.completions.create(
             model=MODEL,
             messages=messages,
-            temperature=0.1,
-            response_format={"type": "json_object"}
+            temperature=0.1
         )
         ai_response = response.choices[0].message.content or ""
         
-        # Parse JSON
-        data = json.loads(ai_response)
+        # Markdown වලින් JSON ආවොත් ඒක සුද්ද කිරීම
+        clean_response = ai_response.strip()
+        if clean_response.startswith("```json"):
+            clean_response = clean_response[7:]
+        if clean_response.startswith("```"):
+            clean_response = clean_response[3:]
+        if clean_response.endswith("```"):
+            clean_response = clean_response[:-3]
+        clean_response = clean_response.strip()
+
+        try:
+            data = json.loads(clean_response)
+        except json.JSONDecodeError:
+            # JSON නැතුව සාමාන්‍ය වචන ආවොත් කෙලින්ම ඒක reply එකක් විදිහට යවනවා
+            data = {"reply": ai_response, "actions": []}
+
         return record_reply(execute_payload(data))
 
-    except json.JSONDecodeError as e:
-        return record_reply(f"JSON Parse Error: {str(e)}\nRaw response: {ai_response}")
     except Exception as e:
         return record_reply(f"AI Error: {str(e)}")
 
