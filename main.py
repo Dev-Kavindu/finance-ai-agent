@@ -15,7 +15,7 @@ import gradio as gr
 # Load environment variables
 load_dotenv(override=True)
 groq_api_key = os.getenv('GROQ_API_KEY')
-MODEL = "llama-3.3-70b-versatile"
+MODEL = "openai/gpt-oss-120b"
 groq = Groq(api_key=groq_api_key)
 
 # ============================================================================
