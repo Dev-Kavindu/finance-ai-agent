@@ -27,7 +27,7 @@ os.makedirs(DATA_DIR, exist_ok=True)
 DB_PATH = os.path.join(DATA_DIR, 'finance_tracker.db')
 
 groq_api_key = os.getenv('GROQ_API_KEY')
-MODEL = "openai/gpt-oss-120bt"
+MODEL = "openai/gpt-oss-120b"
 groq = Groq()
 
 def init_db():
